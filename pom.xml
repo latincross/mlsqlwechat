@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>tech.mlsql</groupId>
+    <artifactId>wechat</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>c3-antlr</module>
+    </modules>
+    <profiles>
+        <profile>
+            <id>antlr4.7.1-maven</id>
+            <modules>
+                <module>c3-antlr</module>
+            </modules>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.antlr</groupId>
+                        <artifactId>antlr4-maven-plugin</artifactId>
+                        <version>4.7.1</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>antlr4</goal>
+                                </goals>
+                                <!--<phase>generate-sources</phase>-->
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <visitor>false</visitor>
+                            <sourceDirectory>src/main/resources</sourceDirectory>
+                            <outputDirectory>src/main/java/test/dsl/parser</outputDirectory>
+                        </configuration>
+                    </plugin>
+
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

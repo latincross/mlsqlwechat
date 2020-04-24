@@ -1,0 +1,7 @@
+PLUS=1
+MINUS=2
+INT=3
+WS=4
+UNRECOGNIZED=5
+'+'=1
+'-'=2
