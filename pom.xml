@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>c3-antlr</module>
+        <module>c5-druid</module>
     </modules>
     <profiles>
         <profile>
