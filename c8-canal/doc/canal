@@ -1,0 +1,16 @@
+https://github.com/alibaba/canal
+https://github.com/alibaba/canal/blob/master/connector/core/src/main/java/com/alibaba/otter/canal/connector/core/consumer/CommonMessage.java
+
+data：数据列表，JSON数组，如果是插入则表示插入的数据，如果是更新，则表示更新后的最新数据，如果是删除，则表示被删除的数据
+database：数据库或schema
+es：binlog executeTime，执行耗时，13位的时间戳（MySql端）
+id：事件操作的序列号，1,2,3…
+isDdl：是否是DDL操作
+mysqlType：mysql字段类型
+old：旧数据列表,用于update,size和data的size一一对应
+pkNames：kafka分区键
+sql：执行的sql，dml sql为空
+sqlType：java.sql.Types类型
+table：表名
+ts：dml build timeStamp, 同步时间（Canal端）
+type：类型:INSERT/UPDATE/DELETE

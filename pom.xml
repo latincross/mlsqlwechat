@@ -13,6 +13,7 @@
         <module>c5-druid</module>
         <module>c6-python</module>
         <module>c7-binlog</module>
+        <module>c8-canal</module>
     </modules>
     <profiles>
         <profile>

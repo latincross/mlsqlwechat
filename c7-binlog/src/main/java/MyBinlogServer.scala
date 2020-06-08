@@ -5,6 +5,11 @@ import com.github.shyiko.mysql.binlog.BinaryLogClient
 import com.github.shyiko.mysql.binlog.event.EventType._
 import com.github.shyiko.mysql.binlog.event._
 
+/*
+ * Created by respect on 24/05/2020
+ * Email: wanp1989@126.com
+ */
+
 case class MySQLConnectionInfo(host: String, port: Int, userName: String, password: String
                                , binlogFileName: Option[String], recordPos: Option[Long])
 
@@ -52,9 +57,9 @@ class MyBinlogServer {
 
   def printRecord(event: Event, binLogFilename: String, eventType: String ,header: EventHeaderV4) = {
     eventType match {
-      case EventInfo.INSERT_EVENT => deserializer(event.getData[WriteRowsEventData].getRows.iterator() ,header)
-      case EventInfo.UPDATE_EVENT => deserializer2(event.getData[UpdateRowsEventData].getRows.iterator() ,header)
-      case EventInfo.DELETE_EVENT => deserializer(event.getData[DeleteRowsEventData].getRows.iterator() ,header)
+//      case EventInfo.INSERT_EVENT => deserializer(event.getData[WriteRowsEventData].getRows.iterator() ,header)
+//      case EventInfo.UPDATE_EVENT => deserializer2(event.getData[UpdateRowsEventData].getRows.iterator() ,header)
+//      case EventInfo.DELETE_EVENT => deserializer(event.getData[DeleteRowsEventData].getRows.iterator() ,header)
       case _ => println("other: " + event.toString)
     }
   }
@@ -90,7 +95,7 @@ class MyBinlogServer {
 object MyBinlogServer{
   def main(args: Array[String]) {
     val bls = new MyBinlogServer
-    bls.connectMySQL(MySQLConnectionInfo("127.0.0.1" ,3306 ,"test" ,"test" ,Option("master-bin.000069") ,Option(4)))
+    bls.connectMySQL(MySQLConnectionInfo("127.0.0.1" ,3306 ,"root" ,"mlsql" ,Option("master-bin.000069") ,Option(4)))
   }
 }
 

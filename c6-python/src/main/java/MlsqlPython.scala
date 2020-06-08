@@ -9,6 +9,11 @@ import tech.mlsql.arrow.python.runner.{ArrowPythonRunner, ChainedPythonFunctions
 import tech.mlsql.common.utils.lang.sc.ScalaMethodMacros.str
 import scala.collection.JavaConverters._
 
+/*
+ * Created by respect on 19/05/2020
+ * Email: wanp1989@126.com
+ */
+
 object MlsqlPython{
   def main(args: Array[String]): Unit = {
     val spark = SparkSession

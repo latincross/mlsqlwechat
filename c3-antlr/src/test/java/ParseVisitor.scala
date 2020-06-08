@@ -1,5 +1,3 @@
-import java.lang.Object
-
 import test.dsl.parser.DSLSQLParser.{BooleanExpressionContext, ExpressionContext, FormatContext, PathContext, TableNameContext}
 import test.dsl.parser.{DSLSQLBaseVisitor, DSLSQLParser}
 

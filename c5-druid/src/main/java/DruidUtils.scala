@@ -1,11 +1,15 @@
 import com.alibaba.druid.sql.SQLUtils
 import com.alibaba.druid.sql.ast.statement.SQLSelectStatement
 import com.alibaba.druid.sql.repository.SchemaRepository
-import com.alibaba.druid.sql.visitor.SchemaStatVisitor
 import com.alibaba.druid.util.JdbcConstants
 
 import scala.collection.JavaConverters._
 import scala.collection.mutable
+
+/*
+ * Created by respect on 07/05/2020
+ * Email: wanp1989@126.com
+ */
 
 /**
   * create table c5_user(id varchar(255) ,name varchar(255))
