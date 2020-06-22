@@ -59,45 +59,45 @@ object SparkCanalTest {
     """.stripMargin
 
   val canal1 =
-  """
-    |{
-    |    "data":[
-    |        {
-    |            "id1":"1",
-    |            "name1":"0",
-    |        },
-    |        {
-    |            "id1":"1",
-    |            "name1":"2",
-    |        }
-    |    ],
-    |    "database":"wow1",
-    |    "es":1589526850000,
-    |    "id":54,
-    |    "isDdl":false,
-    |    "mysqlType":{
-    |        "id1":"bigint(20)",
-    |        "name1":"varchar(255)"
-    |    },
-    |    "old":[
-    |        {
-    |            "name1":"1"
-    |        },
-    |        {
-    |            "name1":"2"
-    |        }
-    |    ],
-    |    "pkNames":null,
-    |    "sql":"",
-    |    "sqlType":{
-    |        "id1":-5,
-    |        "name1":12
-    |    },
-    |    "table":"test1",
-    |    "ts":1589527037159,
-    |    "type":"UPDATE"
-    |}
-  """.stripMargin
+    """
+      |{
+      |    "data":[
+      |        {
+      |            "id1":"1",
+      |            "name1":"0",
+      |        },
+      |        {
+      |            "id1":"1",
+      |            "name1":"2",
+      |        }
+      |    ],
+      |    "database":"wow1",
+      |    "es":1589526850000,
+      |    "id":54,
+      |    "isDdl":false,
+      |    "mysqlType":{
+      |        "id1":"bigint(20)",
+      |        "name1":"varchar(255)"
+      |    },
+      |    "old":[
+      |        {
+      |            "name1":"1"
+      |        },
+      |        {
+      |            "name1":"2"
+      |        }
+      |    ],
+      |    "pkNames":null,
+      |    "sql":"",
+      |    "sqlType":{
+      |        "id1":-5,
+      |        "name1":12
+      |    },
+      |    "table":"test1",
+      |    "ts":1589527037159,
+      |    "type":"UPDATE"
+      |}
+    """.stripMargin
 
   def main(args: Array[String]): Unit = {
     val warehouseLocation = "spark-warehouse"
@@ -113,8 +113,8 @@ object SparkCanalTest {
 
     val tableKeyMap = Map("wow\001test" -> "id" ,"wow1\001test1" -> "id1")
 
-//    val connInfoMap = Map("wow\001test" -> ConnectionInfo("127.0.0.1" ,3306 ,"root" ,"mlsql" ,"wow" ,"test")
-//      ,"wow1\001test1" -> ConnectionInfo("127.0.0.1" ,3306 ,"root" ,"mlsql" ,"wow" ,"test"))
+    //    val connInfoMap = Map("wow\001test" -> ConnectionInfo("127.0.0.1" ,3306 ,"root" ,"mlsql" ,"wow" ,"test")
+    //      ,"wow1\001test1" -> ConnectionInfo("127.0.0.1" ,3306 ,"root" ,"mlsql" ,"wow" ,"test"))
 
     val canalDs = spark.createDataset[String](Array(canal ,canal1)).as("data")
 
@@ -138,47 +138,47 @@ object SparkCanalTest {
       })
     }.groupBy(_.key)
       .map(records => {
-      val items = records._2.toSeq.sortBy(_.ts)
-      items.last
-    })
+        val items = records._2.toSeq.sortBy(_.ts)
+        items.last
+      })
 
     //连接MySQL查询Schema，此方式简单，但是需要连接MySql
-//    dataSet.collect().foreach(println(_))
-//    val schemaSet = dataSet.map(record => {
-//      DbInfo(record.db, record.tb)
-//    }).distinct()
-//      .collect()
-//      .map(di =>{
-//      //转换mysql schema比较昂贵，去重之后转，代价小些
-//      val schema = JdbcTypeUtils.loadSchemaInfo(connInfoMap.get(s"${di.db}\001${di.tb}").get)
-//      SchemaInfo(di.db, di.tb, schema)
-//    })
+    //    dataSet.collect().foreach(println(_))
+    //    val schemaSet = dataSet.map(record => {
+    //      DbInfo(record.db, record.tb)
+    //    }).distinct()
+    //      .collect()
+    //      .map(di =>{
+    //      //转换mysql schema比较昂贵，去重之后转，代价小些
+    //      val schema = JdbcTypeUtils.loadSchemaInfo(connInfoMap.get(s"${di.db}\001${di.tb}").get)
+    //      SchemaInfo(di.db, di.tb, schema)
+    //    })
 
     //Json方式处理，不建议这么做
-//   val schemaSet.foreach { case (table, index) => {
-//        val tmpRDD = dataSet.filter(record => {
-//          record.db == table.db && record.tb == table.tb
-//        }).map(_.row.toJSONString)
-//
-//        val columns = table.schema.fields.map(sf => {
-//          sf.dataType match {
-//            case StringType => {
-//              F.col(sf.name)
-//            }
-//            case _ => F.col(sf.name).cast(sf.dataType).as(sf.name)
-//          }
-//        })
-//
-//        val stringTypeSchema = JdbcTypeUtils.changeStructTypeToStringType(table.schema)
-//
-//        val df = spark.createDataset[String](tmpRDD).toDF("value")
-//          .select(new Column(JsonToStructs(stringTypeSchema ,Map() ,F.col("value").expr)).as("data"))
-//          .select("data.*")
-//          .select(columns: _*)
-//
-//        df.collect().foreach(data => println(s"${table.db}.${table.tb}:" + data))
-//      }
-//    }
+    //   val schemaSet.foreach { case (table, index) => {
+    //        val tmpRDD = dataSet.filter(record => {
+    //          record.db == table.db && record.tb == table.tb
+    //        }).map(_.row.toJSONString)
+    //
+    //        val columns = table.schema.fields.map(sf => {
+    //          sf.dataType match {
+    //            case StringType => {
+    //              F.col(sf.name)
+    //            }
+    //            case _ => F.col(sf.name).cast(sf.dataType).as(sf.name)
+    //          }
+    //        })
+    //
+    //        val stringTypeSchema = JdbcTypeUtils.changeStructTypeToStringType(table.schema)
+    //
+    //        val df = spark.createDataset[String](tmpRDD).toDF("value")
+    //          .select(new Column(JsonToStructs(stringTypeSchema ,Map() ,F.col("value").expr)).as("data"))
+    //          .select("data.*")
+    //          .select(columns: _*)
+    //
+    //        df.collect().foreach(data => println(s"${table.db}.${table.tb}:" + data))
+    //      }
+    //    }
 
     val schemaSet = dataSet.map(record => {
       MysqlSchemaInfo(record.db, record.tb ,record.sqlType ,record.mysqlType)

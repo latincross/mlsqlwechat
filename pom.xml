@@ -16,6 +16,7 @@
         <module>c8-canal</module>
         <module>c9-register</module>
         <module>c9-register-method</module>
+        <module>c10-udf-udaf</module>
     </modules>
     <profiles>
         <profile>
