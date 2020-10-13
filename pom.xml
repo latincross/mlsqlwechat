@@ -17,6 +17,7 @@
         <module>c9-register</module>
         <module>c9-register-method</module>
         <module>c10-udf-udaf</module>
+        <module>c11-if-else-for-demo</module>
     </modules>
     <profiles>
         <profile>
