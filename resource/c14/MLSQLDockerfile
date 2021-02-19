@@ -1,0 +1,36 @@
+FROM 172.16.2.66:5000/spark:14-3.0
+RUN apt-get update \
+    && apt-get install -y \
+        git \
+        wget \
+        cmake \
+        build-essential \
+        curl \
+        unzip \
+        libgtk2.0-dev \
+        zlib1g-dev \
+        libgl1-mesa-dev \
+    && apt-get clean \
+    && echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh \
+    && wget \
+        --quiet "https://repo.anaconda.com/miniconda/Miniconda3-4.7.12.1-Linux-x86_64.sh" \
+        -O /tmp/anaconda.sh \
+    && /bin/bash /tmp/anaconda.sh -b -p /opt/conda \
+    && rm /tmp/anaconda.sh \
+    && /opt/conda/bin/conda install -y \
+        libgcc python=3.6.9 \
+    && /opt/conda/bin/conda clean -y --all \
+    && /opt/conda/bin/pip install \
+        flatbuffers \
+        cython==0.29.0 \
+        numpy==1.15.4
+
+RUN /opt/conda/bin/conda create --name dev python=3.6.9 -y \
+    && source /opt/conda/bin/activate  dev \
+    && pip install pyarrow==0.10.0 \
+    && pip install ray==0.8.0 \
+    && pip install aiohttp psutil setproctitle grpcio pandas xlsxwriter watchdog requests click uuid sfcli  pyjava
+
+COPY streamingpro-mlsql-spark_3.0_2.12-2.0.1-SNAPSHOT.jar /opt/spark/work-dir/
+WORKDIR /opt/spark/work-dir
+ENTRYPOINT [ "/opt/entrypoint.sh" ]

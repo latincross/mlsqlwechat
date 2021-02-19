@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spark-hello
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: spark-hello
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: spark-hello
+    spec:
+      serviceAccountName: spark
+      containers:
+      - name: spark-hello     
+        args:
+          - >-
+            echo "/opt/spark/bin/spark-submit --master k8s://https://172.16.2.62:6443
+            --deploy-mode client
+            --name spark-pi
+            --class org.apache.spark.examples.SparkPi
+            --conf spark.kubernetes.namespace=default
+            --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark
+            --conf spark.jars.ivy=/tmp/.ivy
+            --conf spark.executor.instances=2
+            --conf spark.kubernetes.container.image=172.16.2.66:5000/spark:v3.0
+            --conf spark.driver.host=$POD_IP
+            local:///opt/spark/examples/jars/spark-examples_2.12-3.0.2-SNAPSHOT.jar" | bash
+        command:
+          - /bin/sh
+          - '-c'
+        env:
+          - name: POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP          
+        image: '172.16.2.66:5000/spark:v3.0'
+        imagePullPolicy: Always
+        securityContext:
+          runAsUser: 0

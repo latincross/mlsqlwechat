@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations: {}
+  name: spark-hello
+  namespace: default
+spec:
+  ports:
+    - name: mlsql-hello
+      port: 9003
+      targetPort: 9003
+    - name: spark-hello
+      port: 4040
+      targetPort: 4040
+  selector:
+    app: spark-hello

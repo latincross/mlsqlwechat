@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spark-hello
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: spark-hello
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: spark-hello
+    spec:
+      serviceAccountName: spark
+      nodeSelector:
+        mlsql/role: test
+      containers:
+      - name: spark-hello     
+        args: [ "while true; do sleep 10000; done;" ]
+        command:
+          - /bin/sh
+          - '-c'
+        image: '172.16.2.66:5000/spark:v3.0'
+        imagePullPolicy: Always
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+          - name: mlsql
+            mountPath: /opt/mlsql
+      volumes:
+        - name: mlsql
+          hostPath:
+            path: /root/k8s/mlsql/test-mount
+

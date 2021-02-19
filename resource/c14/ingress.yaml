@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: spark-hello-ingress
+  namespace: default
+spec:
+  rules:
+    - host: hello.mlsql.com
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: spark-hello
+            servicePort: 9003
+    - host: hello.ui.com
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: spark-hello
+            servicePort: 4040
